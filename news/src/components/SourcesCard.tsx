@@ -3,7 +3,7 @@ import Favicon from '../assets/favicon.png'
 
 const SourcesCard = ({onClick}: {onClick?: ()=> void}) => {
   return (
-    <div className='relative w-max ml-10' onClick={onClick}>
+    <div className='relative w-max ml-10 cursor-pointer' onClick={onClick}>
         <div className='p-1 bg-gray-50 w-20 border rounded-full  '>
             <img src={Favicon} alt="" className=' w-full rounded-full' />
         </div>
