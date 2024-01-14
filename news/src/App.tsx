@@ -4,6 +4,7 @@ import Profile from './components/Profile'
 import SearchBar from './components/SearchBar'
 import SourcesCard from './components/SourcesCard'
 import TrendingArticle from './components/TrendingArticle'
+import Logo from './components/Logo'
 const App = () => {
 
   return (
@@ -13,6 +14,7 @@ const App = () => {
       <NewsCard/>
       <SourcesCard/>
       <TrendingArticle/>
+      <Logo/>
     </div>
   )
 }
