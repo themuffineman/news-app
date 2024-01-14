@@ -1,7 +1,7 @@
 // import React from 'react'
 import favicon from '../assets/favicon.png' 
 import cucina from '../assets/cucina-desktop.jpg'
-import Button from './Button'
+import Button from './NewsCardButton'
 
 const NewsCard = () => {
   return (
