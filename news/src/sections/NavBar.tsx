@@ -11,8 +11,6 @@ const NavBar: React.FC = () => {
             <Logo/>
             <SearchBar/>
         </div>
-
-
         <div className='z-[50000rem]  flex justify-end'>
             <Profile/>
         </div>
