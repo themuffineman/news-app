@@ -2,13 +2,15 @@ import React from 'react'
 import NavBar from './sections/NavBar'
 import TrendingArticle from './components/TrendingArticle'
 import NewsGrid from './sections/NewsGrid'
+import Sources from './sections/Sources'
 
 const App: React.FC = () => {
 
   return (
-    <div className='flex flex-col items-center justify-between py-5 gap-2'>
+    <div className='flex flex-col items-center justify-between py-5 pt-40 gap-2 scroll-smooth'>
       <NavBar/>
       <TrendingArticle/>
+      <Sources/>
       <NewsGrid/>
     </div>
   )
