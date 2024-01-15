@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
-const TrendingButton:React.FC = ({children, onClick}: {children?: string, onClick?: ()=> any}) => {
+const TrendingButton:React.FC = ({children, onClick}: {children?: ReactNode, onClick?: ()=> any}) => {
   return (
-        <button onClick={onClick} className='w-64 h-16 shadow-xl border bg-white rounded-lg active:shadow-none hover:bg-gray-200 active:translate-y-1 font-semibold capitalize z-20' >
+        <button onClick={onClick} className='w-40 sm:w-64 h-16 shadow-xl border bg-white rounded-lg active:shadow-none hover:bg-gray-200 active:translate-y-1 font-semibold capitalize z-20' >
             {children}
         </button>
   )

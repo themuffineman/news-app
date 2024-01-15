@@ -7,12 +7,14 @@ import Sources from './sections/Sources'
 const App: React.FC = () => {
 
   return (
-    <div className='flex flex-col items-center justify-between py-5 pt-40 gap-2 scroll-smooth'>
+    <>
       <NavBar/>
-      <TrendingArticle/>
-      <Sources/>
-      <NewsGrid/>
-    </div>
+      <div className='flex flex-col items-center justify-between py-5 pt-40 gap-2 scroll-smooth'>
+        <TrendingArticle/>
+        <Sources/>
+        <NewsGrid/>
+      </div>
+    </>
   )
 }
 

@@ -1,12 +1,6 @@
-@keyframes loading {
-    to{
-        transform: rotate(1turn);
-    }
-}
-
-
 ::-webkit-scrollbar {
     width: 12px; 
+    height: 5px;
   }
   
   ::-webkit-scrollbar-thumb {
