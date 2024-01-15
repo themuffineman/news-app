@@ -4,6 +4,7 @@ import TrendingArticle from './components/TrendingArticle'
 import NewsGrid from './sections/NewsGrid'
 import Sources from './sections/Sources'
 import SignUpPage from './pages/SignUpPage'
+import SignUpForm from './components/SignUpForm'
 
 const App: React.FC = () => {
 
@@ -15,6 +16,7 @@ const App: React.FC = () => {
         <Sources/>
         <NewsGrid/>
         <SignUpPage/>
+        <SignUpForm/>
       </div>
     </>
   )
