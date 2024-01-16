@@ -1,11 +1,26 @@
-import React, {useState} from 'react'
-import favicon from '../assets/favicon.png' 
+import React, {useEffect, useState} from 'react'
 import Button from './NewsCardButton'
 import {NewsCardProps} from '../utils/types'
 
 
 const NewsCard: React.FC<NewsCardProps> = ({news}) => {
+
+    const [logoUrl, setLogoUrl] = useState<string>()
     
+    async function getSourceLogo(url:string) {
+        
+        try{
+            const logoSrc: Response = await fetch(`https://www.google.com/s2/favicons?domain=${url}&sz=256`)
+            setLogoUrl(logoSrc)
+        }
+        catch(error){
+            console.log('Error Fetching Sources Logo', error)
+        }
+    }
+
+    useEffect(()=>{
+        getSourceLogo(news.source)
+    },[news])
 
     const [savedArticle, setSavedArticle] = useState<boolean>(false)
     
@@ -18,6 +33,8 @@ const NewsCard: React.FC<NewsCardProps> = ({news}) => {
         window.open(url, '_blank');
     }
 
+    
+
 
     const originalDate = news.published_at;
     const dateObject = new Date(originalDate);
@@ -28,7 +45,7 @@ const NewsCard: React.FC<NewsCardProps> = ({news}) => {
         <div className='left-section flex-1 flex flex-col gap-3 w-full md:w-[60%] p-4 h-full'>
             <div className='top-sect flex justify-between items-center capitalize font-semibold'>
                 <div className='flex gap-2 items-center uppercase font-semibold'>
-                    <div className="w-10 p-1 border rounded-sm bg-gray-50"><img src={favicon} alt="" className="w-full rounded-sm" /></div>
+                    <div className="w-10 p-1 border rounded-sm bg-gray-50"><img src={logoUrl} alt="" className="w-full rounded-sm" /></div>
                     <p className='capitalize'>{news.source}</p>
                 </div>
                 <div>

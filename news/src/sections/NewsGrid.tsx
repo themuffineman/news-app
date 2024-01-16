@@ -35,6 +35,8 @@ const NewsGrid: React.FC = () => {
       console.error('Error fetching data:', error);
     }
   }
+
+  
   
 
 
