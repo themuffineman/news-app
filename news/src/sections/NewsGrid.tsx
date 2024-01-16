@@ -30,23 +30,21 @@ const NewsGrid: React.FC = () => {
 
 
   return (
-    <div className='flex flex-col gap-10 justify-between items-center w-[90vw]-t-2 mt-20 p-2' >
-      <h2 className='text-3xl sm:text-5xl font-bold capitalize text-black'>Top Stories</h2>
+    <div className='flex flex-col gap-10 justify-between items-center w-[90vw]-t-2 mt-20 p-2'>
+    <h2 className='text-3xl sm:text-5xl font-bold capitalize text-black'>Top Stories</h2>
+    <div className='grid grid-cols-1 2xl:grid-cols-2 gap-20 justify-items-center self-center content-center w-full p-2'>
       {latestNewsData.length > 0 ? (
         latestNewsData.map((news: latestNewsTypes) => (
           <div key={news.uuid}>
-            <div className='grid grid-cols-1 lg:grid-cols-2 gap-20 justify-items-center content-center w-full px-2'>
-              <NewsCard news={news} />
-            </div>
+            <NewsCard news={news} />
           </div>
         ))
-        ) : (
-          <p>No news available.</p>
-          )}
-      <LoadMore loadingMore={loadingMore} setLoadingMore={setLoadingMore} getNews={getNews} />
+      ) : (
+        <p>No news available.</p>
+      )}
     </div>
-  );
-  
-}
+    <LoadMore loadingMore={loadingMore} setLoadingMore={setLoadingMore} getNews={getNews} />
+    </div>
+);}
 
 export default NewsGrid
