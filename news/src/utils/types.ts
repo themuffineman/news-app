@@ -13,6 +13,20 @@ export interface latestNewsTypes {
     relevance_score: number | null; 
     locale?: string;
   }
+
+  export interface HeadlineItem {
+    source: {
+      id: string;
+      name: string;
+    };
+    author: string;
+    title: string;
+    description: string;
+    url: string;
+    urlToImage: string | null;
+    publishedAt: string;
+    content: string | null;
+  }
   
 
   export interface NewsCardProps {

@@ -12,9 +12,9 @@ const NewsGrid: React.FC = () => {
 
   const ApiKey: string = '2n8wA4vBFQwSPQh6XUjf6qKlzgoObCfbWC7irZqX'
 
-  useEffect(()=>{
-    getNews();
-  },[])
+  // useEffect(()=>{
+  //   getNews();
+  // },[])
 
 
 
@@ -22,12 +22,14 @@ const NewsGrid: React.FC = () => {
     try {
       const newsDataRaw = await fetch(`https://api.thenewsapi.com/v1/news/top?api_token=${ApiKey}&locale=us&limit=3&page=${pageCount}`);
       const newsDataJson = await newsDataRaw.json();
-      const uniqueNewsData = Array.from(new Set(newsDataJson.data));
-      const combinedArray: latestNewsTypes[] = Array.from(new Set([...latestNewsData, ...uniqueNewsData]));
+      
+
+      const combinedArray = [...latestNewsData, ...newsDataJson.data]
+      const finalNewsData: latestNewsTypes[] = combinedArray.filter((value, index, self) => self.findIndex(obj => obj.uuid === value.uuid) === index);
 
       setLoadingMore(false);
       setPageCount(prev => prev + 1);
-      setlatestNewsData(combinedArray);
+      setlatestNewsData(finalNewsData);
 
 
 
