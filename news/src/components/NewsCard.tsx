@@ -13,6 +13,11 @@ const NewsCard: React.FC<NewsCardProps> = ({news}) => {
         setSavedArticle( prev => !prev)
     };
 
+    const openUrlInNewTab = () => {
+        const url = `${news.url}`;  
+        window.open(url, '_blank');
+    }
+
 
     const originalDate = news.published_at;
     const dateObject = new Date(originalDate);
@@ -37,7 +42,7 @@ const NewsCard: React.FC<NewsCardProps> = ({news}) => {
                 <p className='text-gray-500'>{news.description} </p>
             </div>
             <div className='flex justify-between mt-auto items-center '>
-                <Button>Read More</Button>
+                <Button onClick={openUrlInNewTab} >Read More</Button>
                 <p className='text-[1rem] capitalize font-semibold'>{news.categories.length > 1? news.categories[1] : news.categories[0]}</p>
             </div>
         </div>

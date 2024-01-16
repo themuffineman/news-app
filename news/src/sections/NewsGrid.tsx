@@ -6,6 +6,7 @@ import { latestNewsTypes } from '../utils/types'
 const NewsGrid: React.FC = () => {
 
   const [latestNewsData , setlatestNewsData] = useState<latestNewsTypes[] | [] >([])
+  const [pageCount, setPageCount] = useState<number>(1)
 
   const [loadingMore,setLoadingMore] = useState<boolean>(false)
 
@@ -16,17 +17,25 @@ const NewsGrid: React.FC = () => {
   },[])
 
 
-  async function getNews(){
-    try{
-      const newsDataRaw = await fetch(`https://api.thenewsapi.com/v1/news/top?api_token=${ApiKey}&locale=us&limit=3`,)
-      const newsDataJson = await newsDataRaw.json()
-      setLoadingMore(false)
-      setlatestNewsData(prev => [...prev, ...newsDataJson.data])
-    }
-    catch(error){
+
+  async function getNews() {
+    try {
+      const newsDataRaw = await fetch(`https://api.thenewsapi.com/v1/news/top?api_token=${ApiKey}&locale=us&limit=3&page=${pageCount}`);
+      const newsDataJson = await newsDataRaw.json();
+      const uniqueNewsData = Array.from(new Set(newsDataJson.data));
+      const combinedArray: latestNewsTypes[] = Array.from(new Set([...latestNewsData, ...uniqueNewsData]));
+
+      setLoadingMore(false);
+      setPageCount(prev => prev + 1);
+      setlatestNewsData(combinedArray);
+
+
+
+    } catch (error) {
       console.error('Error fetching data:', error);
     }
   }
+  
 
 
   return (

@@ -6,6 +6,11 @@ import Sources from './sections/Sources'
 
 const App: React.FC = () => {
 
+  fetch('https://www.google.com/s2/favicons?domain=nypost.com&sz=256')
+  .then((result)=>{
+    console.log(result)
+  })
+
   return (
     <>
       <NavBar/>
