@@ -1,30 +1,30 @@
+const puppeteer = require('puppeteer');
 
+async function fetchFavicon(url:string) {
 
-async function fetchFavicon(siteUrl:string) {
-
-    const websiteUrl = `https://www.${siteUrl}`;
-
+    const websiteUrl = `https://www.${url}`;
     try {
-        const response = await fetch(websiteUrl, { redirect: 'follow' });
-        const finalUrl = response.url;  // Get the final URL after following redirects
-        const html = await response.text();
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
 
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
+        // Navigate to the website
+        await page.goto(websiteUrl, { waitUntil: 'domcontentloaded' });
 
-        const faviconLink = doc.querySelector('link[rel="icon"]')?.getAttribute('href');
+        // Extract the favicon link from the DOM
+        const faviconLink = await page.$eval('link[rel="icon"], link[rel="shortcut icon"]', el => el.getAttribute('href'));
+
+        await browser.close();
+
         if (faviconLink) {
-            const completeFaviconUrl = new URL(faviconLink, finalUrl).toString();
-            console.log('Favicon URL:', completeFaviconUrl);
-            return completeFaviconUrl
+            const completeFaviconUrl = new URL(faviconLink, websiteUrl).toString();
+            return completeFaviconUrl;
         } else {
-            console.log('No favicon found for the website.');
+            return null;
         }
     } catch (error: any) {
         console.error('Error:', error.message);
+        return null;
     }
 }
 
-
-
-export default fetchFavicon;
+module.exports = fetchFavicon;
