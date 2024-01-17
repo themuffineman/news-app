@@ -33,11 +33,18 @@ const TrendingArticle:React.FC = () => {
     }
   }
 
+  const openUrlInNewTab = () => {
+    const url = `${headlines.url}`;  
+    window.open(url, '_blank');
+  }
+
   
 
 
   return (
-    <div className='relative rounded-lg h-max  '>
+    <>
+    <h2 className='text-3xl sm:text-5xl font-bold capitalize mb-12 text-black'>Headlines</h2>
+    <div className='relative rounded-lg h-max flex flex-col  '>
     <div className='absolute z-10 w-full h-full bg-black bg-opacity-70 top-0 left-1/2 -translate-x-1/2 flex p-2 rounded-lg' style={{backdropFilter: 'blur(5px)'}}  ></div>
     <div className=' w-[90vw] sm:w-[80vw] h-max  relative rounded-md bg-opacity-5 bg-center bg-cover' style={{backgroundImage: `url(${headlines.urlToImage? headlines.urlToImage : null })`}}>
 
@@ -46,7 +53,7 @@ const TrendingArticle:React.FC = () => {
                 <p className=' bg-yellow-200 font-semibold text-black px-4 w-max rounded-xl py-2  z-20 '>Top Story</p>
                 <h1 className=' text-xl  font-bold capitalize  z-20 text-white'>{headlines.title || 'Failed To Fetch'}</h1>
                 <p className='text-white opacity-90  z-20 text-lg'> {headlines.description || 'Failed To Fetch'} </p>
-                <TrendingButton>Read Full Article</TrendingButton>
+                <TrendingButton onClick={openUrlInNewTab}>Read Full Article</TrendingButton>
             </div>
             <div className='w-full md:w-[23rem] p-4  z-20 '>
                 <img src={headlines.urlToImage || undefined} alt="" className='w-full rounded-md border' />
@@ -55,6 +62,7 @@ const TrendingArticle:React.FC = () => {
 
     </div>
     </div>
+    </>
   )
 }
 
