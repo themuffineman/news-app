@@ -1,25 +1,22 @@
 import React, {useEffect, useState} from 'react'
 import Button from './NewsCardButton'
 import {NewsCardProps} from '../utils/types'
+import fetchFavicon from '../utils/GetSourceLogo'
 
 
 const NewsCard: React.FC<NewsCardProps> = ({news}) => {
 
     const [logoUrl, setLogoUrl] = useState<string>()
     
-    async function getSourceLogo(url:string) {
-        
-        try{
-            const logoSrc: Response = await fetch(`https://www.google.com/s2/favicons?domain=${url}&sz=256`)
-            setLogoUrl(logoSrc)
-        }
-        catch(error){
-            console.log('Error Fetching Sources Logo', error)
-        }
-    }
+    
+
+
+
+
 
     useEffect(()=>{
-        getSourceLogo(news.source)
+        fetchFavicon(news.source)
+        .then((result)=>{setLogoUrl(result)})
     },[news])
 
     const [savedArticle, setSavedArticle] = useState<boolean>(false)

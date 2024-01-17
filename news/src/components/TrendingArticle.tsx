@@ -44,7 +44,7 @@ const TrendingArticle:React.FC = () => {
         <div className=' flex flex-col md:flex-row w-full h-full z-20 justify-between gap-5 items-center px-5'>
             <div className=' w-full md:w-1/2 h-full flex justify-between flex-col gap-5 pl-4 my-12'>
                 <p className=' bg-yellow-200 font-semibold text-black px-4 w-max rounded-xl py-2  z-20 '>Top Story</p>
-                <h1 className=' text-xl lg:text-7xl font-bold capitalize  z-20 text-white'>{headlines.title}</h1>
+                <h1 className=' text-xl  font-bold capitalize  z-20 text-white'>{headlines.title}</h1>
                 <p className='text-white opacity-90  z-20 text-lg'> {headlines.description} </p>
                 <TrendingButton>Read Full Article</TrendingButton>
             </div>
