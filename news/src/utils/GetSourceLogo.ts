@@ -1,9 +1,8 @@
 
 
-async function fetchFavicon() {
+async function fetchFavicon(siteUrl:string) {
 
-    // const websiteUrl = `https://www.${siteUrl}`;
-    const websiteUrl = 'https://rapidapi.com/';
+    const websiteUrl = `https://www.${siteUrl}`;
 
     try {
         const response = await fetch(websiteUrl, { redirect: 'follow' });
@@ -17,14 +16,15 @@ async function fetchFavicon() {
         if (faviconLink) {
             const completeFaviconUrl = new URL(faviconLink, finalUrl).toString();
             console.log('Favicon URL:', completeFaviconUrl);
+            return completeFaviconUrl
         } else {
             console.log('No favicon found for the website.');
         }
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error:', error.message);
     }
 }
 
-fetchFavicon()
+
 
 export default fetchFavicon;

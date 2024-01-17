@@ -8,16 +8,17 @@ const NewsCard: React.FC<NewsCardProps> = ({news}) => {
 
     const [logoUrl, setLogoUrl] = useState<string>()
     
-    
-
-
-
-
-
-    useEffect(()=>{
-        fetchFavicon(news.source)
-        .then((result)=>{setLogoUrl(result)})
-    },[news])
+    useEffect(() => {
+        const websiteUrl = news.source;
+        fetchFavicon(websiteUrl)
+            .then(result => {
+                setLogoUrl(result);
+            })
+            .catch(error => {
+                console.error('Error fetching favicon:', error);
+            });
+        }, [news]
+    );
 
     const [savedArticle, setSavedArticle] = useState<boolean>(false)
     

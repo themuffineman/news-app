@@ -12,9 +12,9 @@ const NewsGrid: React.FC = () => {
 
   const ApiKey: string = '2n8wA4vBFQwSPQh6XUjf6qKlzgoObCfbWC7irZqX'
 
-  // useEffect(()=>{
-  //   getNews();
-  // },[])
+  useEffect(()=>{
+    getNews();
+  },[])
 
 
 
