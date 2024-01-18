@@ -1,24 +1,32 @@
 import React, {useEffect, useState} from 'react'
 import Button from './NewsCardButton'
 import {NewsCardProps} from '../utils/types'
-import fetchFavicon from '../utils/GetSourceLogo'
 
 
 const NewsCard: React.FC<NewsCardProps> = ({news}) => {
 
     const [logoUrl, setLogoUrl] = useState<string>()
     
+    
     useEffect(() => {
-        const websiteUrl = news.source;
-        fetchFavicon(websiteUrl)
-            .then(result => {
-                setLogoUrl(result);
-            })
-            .catch(error => {
-                console.error('Error fetching favicon:', error);
-            });
-        }, [news]
-    );
+    const websiteUrl = `https://www.${news.source}`;
+    
+    fetch(`http://localhost:3001/api/fetchFavicon?websiteUrl=${encodeURIComponent(websiteUrl)}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.faviconUrl) {
+                setLogoUrl(data.faviconUrl);
+            } else {
+                console.log('No favicon found for the website.');
+                // return undefined
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching favicon:', error);
+        });
+    }, []);
+
+
 
     const [savedArticle, setSavedArticle] = useState<boolean>(false)
     
