@@ -10,19 +10,17 @@ const NewsCard: React.FC<NewsCardProps> = ({news}) => {
     
     useEffect(() => {
     const websiteUrl = `https://www.${news.source}`;
+    const proxyUrl = `http://localhost:3002/api/proxy?websiteUrl=${encodeURIComponent(websiteUrl)}`;
     
-    fetch(`http://localhost:3001/api/fetchFavicon?websiteUrl=${encodeURIComponent(websiteUrl)}`)
+    // Make a request to the proxy server
+    fetch(proxyUrl)
         .then(response => response.json())
         .then(data => {
-            if (data.faviconUrl) {
-                setLogoUrl(data.faviconUrl);
-            } else {
-                console.log('No favicon found for the website.');
-                // return undefined
-            }
+        console.log('Data from proxy server:', data);
+        setLogoUrl(data)
         })
         .catch(error => {
-            console.error('Error fetching favicon:', error);
+        console.error('Error fetching data from proxy server:', error);
         });
     }, []);
 
