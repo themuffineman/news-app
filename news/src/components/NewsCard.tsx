@@ -16,8 +16,8 @@ const NewsCard: React.FC<NewsCardProps> = ({news}) => {
     fetch(proxyUrl)
         .then(response => response.json())
         .then(data => {
-        console.log('Data from proxy server:', data);
-        setLogoUrl(data)
+        console.log('Data from proxy server:', data.faviconUrl);
+        setLogoUrl(data.faviconUrl)
         })
         .catch(error => {
         console.error('Error fetching data from proxy server:', error);
@@ -50,7 +50,7 @@ const NewsCard: React.FC<NewsCardProps> = ({news}) => {
             <div className='top-sect flex justify-between items-center capitalize font-semibold'>
                 <div className='flex gap-2 items-center uppercase font-semibold'>
                     <div className="w-10 p-1 border rounded-sm bg-gray-50"><img src={logoUrl} alt="" className="w-full rounded-sm" /></div>
-                    <p className='capitalize'>{news.source}</p>
+                    <p className='capitalize hover:text-purple-900 hover:underline hover:cursor-pointer'>{news.source}</p>
                 </div>
                 <div>
                     <p className='text-sm'>{formattedDate}</p>
