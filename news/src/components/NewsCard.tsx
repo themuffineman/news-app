@@ -1,11 +1,22 @@
 import React, {useEffect, useState} from 'react'
 import Button from './NewsCardButton'
 import {NewsCardProps} from '../utils/types'
+import Skeleton from '@mui/material/Skeleton'
 
 
 const NewsCard: React.FC<NewsCardProps> = ({news}) => {
 
     const [logoUrl, setLogoUrl] = useState<string>()
+    const [isLoadedFavicon, setIsLoadedFavicon] = useState(false);
+    const [isLoadedMain, setIsLoadedMain] = useState(false);
+
+    const handleImageLoadFavicon = () => {
+        setIsLoadedFavicon(true);
+    };
+
+    const handleImageLoadMain = () => {
+        setIsLoadedMain(true);
+    };
     
     
     useEffect(() => {
@@ -49,7 +60,7 @@ const NewsCard: React.FC<NewsCardProps> = ({news}) => {
         <div className='left-section flex-1 flex flex-col gap-3 w-full md:w-[60%] p-4 h-full'>
             <div className='top-sect flex justify-between items-center capitalize font-semibold'>
                 <div className='flex gap-2 items-center uppercase font-semibold'>
-                    <div className="w-10 p-1 border rounded-sm bg-gray-50"><img src={logoUrl} alt="" className="w-full rounded-sm" /></div>
+                    <div className="w-10 p-1 flex items-center border rounded-sm bg-gray-50"> {!isLoadedFavicon && <Skeleton variant="rectangular" animation="wave" sx={{bgcolor: 'grey.300', width:'2rem', height:'2rem' }} />} <img src={logoUrl} alt="" className="w-full rounded-sm" onLoad={handleImageLoadFavicon} style={{ display: isLoadedFavicon ? 'block' : 'none' }} /></div>
                     <p className='capitalize hover:text-purple-900 hover:underline hover:cursor-pointer'>{news.source}</p>
                 </div>
                 <div>
@@ -69,8 +80,9 @@ const NewsCard: React.FC<NewsCardProps> = ({news}) => {
         </div>
 
         
-        <div className='rigth-section relative w-full h-full md:w-[40%] mb-0 sm:mb-0'>
-            <img src={news.image_url} alt="" className='w-full h-full object-cover rounded-md md:rounded-r-md md:rounded-none' />
+        <div className='rigth-section relative w-full flex items-center justify-center h-full md:w-[40%] mb-0 sm:mb-0'>
+            {!isLoadedMain && <Skeleton variant="rounded" animation="wave" sx={{bgcolor: 'grey.300', width:{xs:'200px', sm:'200px', md:'300px'}, height:{xs:'100px', sm:'200px', md:'200px'}, marginBottom:'1rem' }} />}
+            <img src={news.image_url} alt="" onLoad={handleImageLoadMain} style={{ display: isLoadedMain ? 'block' : 'none' }} className='w-full h-full object-cover rounded-md md:rounded-r-md md:rounded-none' />
             <svg xmlns="http://www.w3.org/2000/svg" className={` ${savedArticle? 'fill-black' : 'fill-white'} ionicon absolute p-2 h-8 w-8 bg-white  bottom-2 right-2 cursor-pointer rounded-md border`} onClick={addToSaved} viewBox="0 0 512 512"><path d="M352 48H160a48 48 0 00-48 48v368l144-128 144 128V96a48 48 0 00-48-48z" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="32"/></svg>
         </div>
 
