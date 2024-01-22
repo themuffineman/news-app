@@ -16,7 +16,7 @@ const NewsCard: React.FC<NewsCardProps> = ({news}) => {
     fetch(proxyUrl)
         .then(response => response.json())
         .then(data => {
-        console.log('Data from proxy server:', data.faviconUrl);
+        // console.log('Data from proxy server:', data.faviconUrl);
         setLogoUrl(data.faviconUrl)
         })
         .catch(error => {

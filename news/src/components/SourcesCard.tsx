@@ -1,12 +1,18 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import { SourcesCardProps } from '../utils/types'
+import Skeleton from '@mui/material/Skeleton'
  
 
 const SourcesCard: React.FC<SourcesCardProps> = ({onClick, url}) => {
-
+  
+  
   const [logoUrl, setLogoUrl] = useState<string>()
-
+  const [isLoaded, setIsLoaded] = useState(false);
+  
+  const handleImageLoad = () => {
+    setIsLoaded(true);
+  };
 
   useEffect(() => {
     const websiteUrl = `https://www.${url}`;
@@ -16,7 +22,7 @@ const SourcesCard: React.FC<SourcesCardProps> = ({onClick, url}) => {
     fetch(proxyUrl)
       .then(response => response.json())
       .then(data => {
-      console.log('Data from proxy server:', data.faviconUrl);
+      // console.log('Data from proxy server:', data.faviconUrl);
       setLogoUrl(data.faviconUrl)
       })
       .catch(error => {
@@ -25,12 +31,15 @@ const SourcesCard: React.FC<SourcesCardProps> = ({onClick, url}) => {
     }, []
   );
 
+
+
   return (
-    <div className='relative w-max ml-10 cursor-pointer' onClick={onClick}>
-        <div className='p-1 bg-gray-50 w-20 border rounded-full  '>
-            <img src={logoUrl} alt="" className=' w-full rounded-full' />
+    <div className='relative w-max  cursor-pointer' onClick={onClick}>
+        <div className='p-1 bg-gray-50 w-20 border rounded-full  flex justify-center'>
+            {!isLoaded && <Skeleton variant="circular" sx={{width:'4.5rem', height: '4.5rem'}} /> }
+            <img src={logoUrl} alt="" onLoad={handleImageLoad} className=' w-full rounded-full' style={{ display: isLoaded ? 'block' : 'none' }} />
         </div>
-        <div className='bg-white text- rounded-3xl border w-max py-1 px-3 shadow font-normal absolute -bottom-6 left-1/2 -translate-x-1/2'>{url}</div>
+        <div className='bg-white text-semibold capitalize rounded-3xl border w-max py-1 px-3 shadow font-normal absolute -bottom-6 left-1/2 -translate-x-1/2'>{url}</div>
     </div>
   )
 }

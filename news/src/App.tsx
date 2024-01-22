@@ -6,8 +6,6 @@ import Sources from './sections/Sources'
 
 const App: React.FC = () => {
 
-  
-
   return (
     <>
       <NavBar/>
