@@ -82,7 +82,7 @@ const NewsCard: React.FC<NewsCardProps> = ({news}) => {
         
         <div className='rigth-section relative w-full flex items-center justify-center h-full md:w-[40%] mb-0 sm:mb-0'>
             {!isLoadedMain && <Skeleton variant="rounded" animation="wave" sx={{bgcolor: 'grey.300', width:{xs:'200px', sm:'200px', md:'300px'}, height:{xs:'100px', sm:'200px', md:'200px'}, marginBottom:'1rem' }} />}
-            <img src={news.image_url} alt="" onLoad={handleImageLoadMain} style={{ display: isLoadedMain ? 'block' : 'none' }} className='w-full h-full object-cover rounded-md md:rounded-r-md md:rounded-none' />
+            <img src={news.image_url} alt="" onLoad={handleImageLoadMain} style={{ display: isLoadedMain ? 'block' : 'none' }} className='w-full h-full object-cover object-center rounded-md md:rounded-r-md md:rounded-none' />
             <svg xmlns="http://www.w3.org/2000/svg" className={` ${savedArticle? 'fill-black' : 'fill-white'} ionicon absolute p-2 h-8 w-8 bg-white  bottom-2 right-2 cursor-pointer rounded-md border`} onClick={addToSaved} viewBox="0 0 512 512"><path d="M352 48H160a48 48 0 00-48 48v368l144-128 144 128V96a48 48 0 00-48-48z" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="32"/></svg>
         </div>
 
