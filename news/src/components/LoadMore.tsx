@@ -5,12 +5,12 @@ import Loading from './Loading'
 const LoadMore:React.FC<{
   loadingMore: boolean;
   setLoadingMore: (param: boolean) => void;
-  getNews: () => void;
-  }> = ({loadingMore, setLoadingMore, getNews}) => {
+  getNewsdata: () => void;
+  }> = ({loadingMore, setLoadingMore, getNewsdata}) => {
 
   function fetchMoreData(){
     setLoadingMore(true)
-    getNews()
+    getNewsdata()
   }
     
   return (

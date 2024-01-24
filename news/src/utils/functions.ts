@@ -50,4 +50,21 @@ export const getSourcesFavicon = async function(url: string) {
     }
   };
   
+export async function getNews(pageCount: number) {
   
+    const ApiKey: string = '2n8wA4vBFQwSPQh6XUjf6qKlzgoObCfbWC7irZqX'
+
+    try {
+      const newsDataRaw = await fetch(`https://api.thenewsapi.com/v1/news/top?api_token=${ApiKey}&locale=us&limit=3&page=${pageCount}`);
+      const newsDataJson = await newsDataRaw.json();
+      return newsDataJson
+      
+
+      
+
+
+
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }

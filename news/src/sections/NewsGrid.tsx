@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import NewsCard from '../components/NewsCard'
 import LoadMore from '../components/LoadMore'
 import { latestNewsTypes } from '../utils/types'
+import { getNews } from '../utils/functions'
 
 const NewsGrid: React.FC = () => {
 
@@ -10,33 +11,25 @@ const NewsGrid: React.FC = () => {
 
   const [loadingMore,setLoadingMore] = useState<boolean>(false)
 
-  const ApiKey: string = '2n8wA4vBFQwSPQh6XUjf6qKlzgoObCfbWC7irZqX'
 
   useEffect(()=>{
-    getNews();
+    getNewsdata()
   },[])
 
-
-
-  async function getNews() {
-    try {
-      const newsDataRaw = await fetch(`https://api.thenewsapi.com/v1/news/top?api_token=${ApiKey}&locale=us&limit=3&page=${pageCount}`);
-      const newsDataJson = await newsDataRaw.json();
+  async function getNewsdata() {
       
+    const newsData = await getNews(pageCount);
+    const combinedArray = [...latestNewsData, ...newsData.data]
+    const finalNewsData: latestNewsTypes[] = combinedArray.filter((value, index, self) => self.findIndex(obj => obj.uuid === value.uuid) === index);
 
-      const combinedArray = [...latestNewsData, ...newsDataJson.data]
-      const finalNewsData: latestNewsTypes[] = combinedArray.filter((value, index, self) => self.findIndex(obj => obj.uuid === value.uuid) === index);
-
-      setLoadingMore(false);
-      setPageCount(prev => prev + 1);
-      setlatestNewsData(finalNewsData);
-
-
-
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
+    setLoadingMore(false);
+    setPageCount(prev => prev + 1);
+    setlatestNewsData(finalNewsData);
   }
+
+
+
+  
 
   
   
@@ -56,7 +49,7 @@ const NewsGrid: React.FC = () => {
         <p>No news available.</p>
       )}
     </div>
-    <LoadMore loadingMore={loadingMore} setLoadingMore={setLoadingMore} getNews={getNews} />
+    <LoadMore loadingMore={loadingMore} setLoadingMore={setLoadingMore} getNewsdata={getNewsdata} />
     </div>
 );}
 
