@@ -45,6 +45,7 @@ export interface Source {
   language: string;
   locale: string | null;
   categories: string[];
+  faviconUrl?: string;
 }
 
 export type SourceList = Source[];
