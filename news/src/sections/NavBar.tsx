@@ -13,7 +13,7 @@ const NavBar: React.FC = () => {
             <SearchBar/>
         </div>
         <div>
-            <Profile/>
+            <Profile username={'Jason'} />
         </div>
         
     </div>
