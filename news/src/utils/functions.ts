@@ -44,6 +44,7 @@ export const getSourcesFavicon = async function(url: string) {
       const data = await response.json();
   
       return data.faviconUrl;
+
     } catch (error) {
       console.error('Error fetching data from proxy server:', error);
       throw new Error('Failed to fetch favicon');
@@ -58,13 +59,20 @@ export async function getNews(pageCount: number) {
       const newsDataRaw = await fetch(`https://api.thenewsapi.com/v1/news/top?api_token=${ApiKey}&locale=us&limit=3&page=${pageCount}`);
       const newsDataJson = await newsDataRaw.json();
       return newsDataJson
-      
-
-      
-
-
 
     } catch (error) {
       console.error('Error fetching data:', error);
+    }
+  }
+
+export async function getSearchNews(ApiKey:string, pageCount:number, searchQuery:string | undefined) {
+    try {
+      const newsDataRaw = await fetch(`https://api.thenewsapi.com/v1/news/all?api_token=${ApiKey}&locale=us&limit=3&page=${pageCount}&search=${searchQuery}`);
+      const newsDataJson = await newsDataRaw.json();
+      return newsDataJson
+  
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw new Error('Failed to fetch Search data')
     }
   }

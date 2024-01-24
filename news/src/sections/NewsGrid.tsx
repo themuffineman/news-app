@@ -27,14 +27,6 @@ const NewsGrid: React.FC = () => {
     setlatestNewsData(finalNewsData);
   }
 
-
-
-  
-
-  
-  
-
-
   return (
     <div className='flex flex-col gap-10 justify-between items-center w-[90vw]-t-2 mt-20 p-2'>
     <h2 className='text-3xl sm:text-5xl font-bold capitalize text-black'>Top Stories</h2>
@@ -51,6 +43,7 @@ const NewsGrid: React.FC = () => {
     </div>
     <LoadMore loadingMore={loadingMore} setLoadingMore={setLoadingMore} getNewsdata={getNewsdata} />
     </div>
-);}
+);
+}
 
 export default NewsGrid

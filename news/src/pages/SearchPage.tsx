@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react'
-// import NewsGrid from '../sections/NewsGrid'
 import NewsCard from '../components/NewsCard'
 import LoadMore from '../components/LoadMore'
 import { latestNewsTypes } from '../utils/types'
 import { useParams } from 'react-router-dom'
+import { getSearchNews } from '../utils/functions'
 
 const SearchPage:React.FC = () => {
 
@@ -18,40 +18,28 @@ const SearchPage:React.FC = () => {
   const ApiKey: string = '2n8wA4vBFQwSPQh6XUjf6qKlzgoObCfbWC7irZqX'
 
   useEffect(()=>{
+    
+    getSearchNewsData()
+
+  },[searchQuery])
+  
+  async function getSearchNewsData(){
     setSearchNewsData([]);
     setPageCount(1)
-    getNews();
-  },[searchQuery])
 
+    const searchNews = await getSearchNews(ApiKey, pageCount, searchQuery)
+    setSearchNewsData(prevSearchNewsData => {
 
+      const combinedArray = [...prevSearchNewsData, ...searchNews.data];
 
-  async function getNews() {
-    try {
-      const newsDataRaw = await fetch(`https://api.thenewsapi.com/v1/news/all?api_token=${ApiKey}&locale=us&limit=3&page=${pageCount}&search=${searchQuery}`);
-      const newsDataJson = await newsDataRaw.json();
-  
-      // Use the functional form of the state updater to ensure you're working with the latest state
-      setSearchNewsData(prevSearchNewsData => {
-        // Combine the new data with the existing data
-        const combinedArray = [...prevSearchNewsData, ...newsDataJson.data];
-  
-        // Remove duplicates based on the 'uuid' property
-        const finalNewsData: latestNewsTypes[] = combinedArray.filter((value, index, self) => self.findIndex(obj => obj.uuid === value.uuid) === index);
-  
-        return finalNewsData;
-      });
-  
-      setLoadingMore(false);
-      setPageCount(prev => prev + 1);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
+      const finalNewsData: latestNewsTypes[] = combinedArray.filter((value, index, self) => self.findIndex(obj => obj.uuid === value.uuid) === index);
+
+      return finalNewsData;
+    });
+
+    setLoadingMore(false);
+    setPageCount(prev => prev + 1);
   }
-  
-
-  
-  
-
 
   return (
     <div className='flex flex-col gap-10 justify-between items-center w-[90vw]-t-2 mt-36 p-2'>
@@ -67,7 +55,7 @@ const SearchPage:React.FC = () => {
         <p>No Results.</p>
       )}
     </div>
-    <LoadMore loadingMore={loadingMore} setLoadingMore={setLoadingMore} getNews={getNews} />
+    <LoadMore loadingMore={loadingMore} setLoadingMore={setLoadingMore} getNewsdata={getSearchNewsData} />
     </div>
 );
 }
