@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
 import ProfileDropDown from './ProfileDropDown'
+import { dropdownLinks } from '../utils/dropdownLinks';
 
 const Profile: React.FC = () => {
     
     const [isOpen, setIsOpen] = useState<boolean>(false);
+
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     const handleOutsideClick = (event : MouseEvent) => {
@@ -41,7 +43,7 @@ const Profile: React.FC = () => {
           <svg xmlns="http://www.w3.org/2000/svg" className="ionicon w-10 h-10 " viewBox="0 0 512 512"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeMiterlimit="10" strokeWidth="32" d="M80 160h352M80 256h352M80 352h352"/></svg>
         </div>
     </div>
-       {isOpen && (<ProfileDropDown/>)}
+       {isOpen && (<ProfileDropDown links={dropdownLinks}/>)}
     </div>
   )
 }

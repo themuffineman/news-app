@@ -43,11 +43,6 @@ const NewsCard: React.FC<NewsCardProps> = ({news}) => {
         setSavedArticle( prev => !prev)
     };
 
-    const openUrlInNewTab = () => {
-        const url = `${news.url}`;  
-        window.open(url, '_blank');
-    }
-
     
 
 
@@ -61,7 +56,7 @@ const NewsCard: React.FC<NewsCardProps> = ({news}) => {
             <div className='top-sect flex justify-between items-center capitalize font-semibold'>
                 <div className='flex gap-2 items-center uppercase font-semibold'>
                     <div className="w-10 p-1 flex items-center border rounded-sm bg-gray-50"> {!isLoadedFavicon && <Skeleton variant="rectangular" animation="wave" sx={{bgcolor: 'grey.300', width:'2rem', height:'2rem' }} />} <img src={logoUrl} alt="" className="w-full rounded-sm" onLoad={handleImageLoadFavicon} style={{ display: isLoadedFavicon ? 'block' : 'none' }} /></div>
-                    <p className='capitalize hover:text-purple-900 hover:underline hover:cursor-pointer'>{news.source}</p>
+                    <p className='capitalize hover:text-purple-900 hover:underline hover:cursor-pointer'><a href={`https://${news.source}`} target="_blank">{news.source}</a></p>
                 </div>
                 <div>
                     <p className='text-sm'>{formattedDate}</p>
@@ -74,7 +69,7 @@ const NewsCard: React.FC<NewsCardProps> = ({news}) => {
                 <p className='text-gray-500'>{news.description} </p>
             </div>
             <div className='flex justify-between mt-auto items-center '>
-                <Button onClick={openUrlInNewTab} >Read More</Button>
+                <Button><a href={news.url} target="_blank">Read More</a></Button>
                 <p className='text-[1rem] capitalize font-semibold'>{news.categories.length > 1? news.categories[1] : news.categories[0]}</p>
             </div>
         </div>

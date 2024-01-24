@@ -49,3 +49,9 @@ export interface Source {
 
 export type SourceList = Source[];
 
+export interface DropdownLinks {
+  name: string;
+  svg?: string;
+  onClick?: string;
+}
+
