@@ -1,39 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import TrendingButton from './TrendingButton'
 import { HeadlineItem } from '../utils/types'
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 
-const TrendingArticle:React.FC = () => {
-
-  const [headlines, setheadlines] = useState<HeadlineItem>([])
-
-  useEffect(()=> {getheadlines()},[])
-
-  
-  async function getheadlines() {
-    
-    const apiKey = '25dc93868aa84bf5a8da61e33e2a7b3f'
-
-    try{
-
-      const result = await fetch(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`)
-
-      const jsonResult = await result.json()
-
-      if(jsonResult.status === "ok"){
-        setheadlines(()=> jsonResult.articles[0])
-      }
-      else{
-        throw new Error(jsonResult.status);
-      }
-
-
-    }
-    catch(error){
-      console.log('Error Fetching headline news:', error)
-    }
-  }
+const TrendingArticle:React.FC<{headlines: HeadlineItem}> = ({headlines}) => {
 
   const openUrlInNewTab = () => {
     const url = `${headlines.url}`;  
@@ -48,7 +19,7 @@ const TrendingArticle:React.FC = () => {
     <h2 className='text-3xl sm:text-5xl font-bold capitalize mb-12 text-black'>Headlines</h2>
     <div className='relative rounded-lg h-max flex flex-col  '>
     <div className='absolute z-10 w-full h-full bg-black bg-opacity-70 top-0 left-1/2 -translate-x-1/2 flex p-2 rounded-lg' style={{backdropFilter: 'blur(5px)'}}  ></div>
-    <div className=' w-[90vw] sm:w-[80vw] h-max  relative rounded-md bg-opacity-5 bg-center bg-cover' style={{backgroundImage: `url(${headlines.urlToImage? headlines.urlToImage : null })`}}>
+    <div className=' w-[90vw] sm:w-[80vw] h-max  relative rounded-md bg-opacity-5 bg-center bg-cover' style={{backgroundImage: `url(${headlines.urlToImage? headlines.urlToImage : undefined })`}}>
 
         <div className=' flex flex-col md:flex-row w-full h-full z-20 justify-between gap-5 items-center px-5'>
             <div className=' w-full md:w-1/2 h-full flex justify-between flex-col gap-5 pl-4 my-12'>
