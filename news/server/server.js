@@ -4,39 +4,41 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = 3000;
 
-// In-memory database (for simplicity, use an array)
+
 const users = [];
+
+let nextUserId = 1; 
 
 // Middleware to parse JSON data
 app.use(bodyParser.json());
 
 // Endpoint for user signup
 app.post('/signup', (req, res) => {
-  const { username, password } = req.body;
+  const { name, email, password } = req.body;
 
-  // Check if the username already exists
-  const existingUser = users.find(user => user.username === username);
+  
+  const existingUser = users.find(user => user.email === email);
   if (existingUser) {
-    return res.status(400).json({ error: 'Username already exists' });
+    return res.status(400).json({ error: 'User already exists' });
   }
 
-  // Add the new user to the array
-  users.push({ username, password });
+  const userId = nextUserId++;
+  users.push({ userId, name, email, password });
 
-  return res.status(201).json({ message: 'User created successfully' });
+  return res.status(201).json({ message: 'User created successfully', userId, name: users.name });
 });
 
-// Endpoint for user login
-app.post('/login', (req, res) => {
-  const { username, password } = req.body;
 
-  // Check if the user exists in the array
-  const user = users.find(user => user.username === username && user.password === password);
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
+
+  
+  const user = users.find(user => user.email === email && user.password === password);
   if (!user) {
     return res.status(401).json({ error: 'Invalid credentials' });
   }
 
-  return res.status(200).json({ message: 'Login successful' });
+  return res.status(200).json({ message: 'Login successful', user });
 });
 
 // Start the server
