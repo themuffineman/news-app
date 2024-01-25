@@ -1,37 +1,45 @@
-// your-server/server.js
 const express = require('express');
-const puppeteer = require('puppeteer');
-const cors = require('cors');
-
-app.use(cors());
+const bodyParser = require('body-parser');
 
 const app = express();
-const port = 3001;
+const PORT = 3000;
 
-app.get('/api/fetchFavicon', async (req, res) => {
-    const websiteUrl = req.query.websiteUrl;
+// In-memory database (for simplicity, use an array)
+const users = [];
 
-    try {
-        const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-        await page.goto(websiteUrl, { waitUntil: 'domcontentloaded' });
+// Middleware to parse JSON data
+app.use(bodyParser.json());
 
-        const faviconLink = await page.$eval('link[rel="icon"], link[rel="shortcut icon"]', el => el.getAttribute('href'));
+// Endpoint for user signup
+app.post('/signup', (req, res) => {
+  const { username, password } = req.body;
 
-        await browser.close();
+  // Check if the username already exists
+  const existingUser = users.find(user => user.username === username);
+  if (existingUser) {
+    return res.status(400).json({ error: 'Username already exists' });
+  }
 
-        if (faviconLink) {
-            const completeFaviconUrl = new URL(faviconLink, websiteUrl).toString();
-            res.json({ faviconUrl: completeFaviconUrl });
-        } else {
-            res.json({ error: 'No favicon found for the website.' });
-        }
-    } catch (error) {
-        console.error('Error:', error.message);
-        res.status(500).json({ error: 'Internal server error.' });
-    }
+  // Add the new user to the array
+  users.push({ username, password });
+
+  return res.status(201).json({ message: 'User created successfully' });
 });
 
-app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
+// Endpoint for user login
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+
+  // Check if the user exists in the array
+  const user = users.find(user => user.username === username && user.password === password);
+  if (!user) {
+    return res.status(401).json({ error: 'Invalid credentials' });
+  }
+
+  return res.status(200).json({ message: 'Login successful' });
+});
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
