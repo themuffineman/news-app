@@ -12,6 +12,8 @@ const SignUpForm: React.FC = () => {
 
     const userAuth = useContext(UserContext)
 
+    console.log(userAuth)
+    
     function switchForm(bool:boolean){
         setSignUp(bool)
     }
@@ -27,7 +29,9 @@ const SignUpForm: React.FC = () => {
         password: inputPassword
     }
 
-    const createUser= async ()=>{
+    const createUser= async (event)=>{
+
+        event.preventDefault()
 
         try{
             const signUpResponse = axios.post('http://localhost:3000/signup', signupData)
@@ -37,6 +41,7 @@ const SignUpForm: React.FC = () => {
             }
         
             userAuth.setUserData(signUpResponse.user);
+            window.alert('Account Successfully Created')
             userAuth.setIsLoggedIn(true)
 
         }catch(error){
@@ -46,7 +51,9 @@ const SignUpForm: React.FC = () => {
         
     }
 
-    const logInUser = async ()=> {
+    const logInUser = async (event)=> {
+
+        event.preventDefault()
 
         try{
             const signInResponse = axios.post('http://localhost:3000/signup', loginData)
@@ -56,6 +63,8 @@ const SignUpForm: React.FC = () => {
             }
         
             userAuth.setUserData(signInResponse.user);
+            window.alert('Successfully loggedIn')
+            userAuth.setIsLoggedIn(true)
 
         }catch(error){
             console.log(error) 
