@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import LoginBtn from './LoginBtn';
 import CreateBtn from './CreateBtn';
-import axios from 'axios';
+// import axios from 'axios';
 import { UserContext } from '../utils/context';
 
 const SignUpForm: React.FC = () => {
@@ -29,37 +29,54 @@ const SignUpForm: React.FC = () => {
 
   const createUser = async () => {
     try {
-      const signUpResponse = await axios.post('http://localhost:3000/signup', signupData);
-
+      const signUpResponse = await fetch('http://localhost:3000/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(signupData),
+      });
+  
       if (!signUpResponse.ok) {
-        throw new Error(signUpResponse.error || 'User already exists');
+        const errorData = await signUpResponse.json();
+        throw new Error(errorData.error || 'User already exists');
       }
-
-      userAuth.setUserData(signUpResponse.user);
+  
+      const userData = await signUpResponse.json();
+      userAuth.setUserData(userData.user);
       window.alert('Account Successfully Created');
       userAuth.setIsLoggedIn(true);
     } catch (error) {
       console.log(error);
-      window.alert(error);
+      window.alert(error.message);
     }
   };
-
+  
   const logInUser = async () => {
     try {
-      const signInResponse = await axios.post('http://localhost:3000/signup', loginData);
-
+      const signInResponse = await fetch('http://localhost:3000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(loginData),
+      });
+  
       if (!signInResponse.ok) {
-        throw new Error(signInResponse.error || 'User already exists');
+        const errorData = await signInResponse.json();
+        throw new Error(errorData.error || 'Invalid credentials');
       }
-
-      userAuth.setUserData(signInResponse.user);
+  
+      const userData = await signInResponse.json();
+      userAuth.setUserData(userData.user);
       window.alert('Successfully loggedIn');
       userAuth.setIsLoggedIn(true);
     } catch (error) {
       console.log(error);
-      window.alert(error);
+      window.alert(error.message);
     }
   };
+  
 
   const updateInputs = (event: React.ChangeEvent<HTMLInputElement>, inputType: string): void => {
     switch (inputType) {
