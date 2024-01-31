@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import TrendingArticle from './components/TrendingArticle'
 import NewsGrid from './sections/NewsGrid'
 import Sources from './sections/Sources'
 import { getheadlines } from './utils/functions'
 import { HeadlineItem } from './utils/types';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { UserContext } from './utils/context'
+import SignUpPage from './pages/SignUpPage'
+import Layout from './Layout'
 
 const App: React.FC = () => {
 
   const [headlines, setHeadlines] = useState<HeadlineItem>({})
+  const {isLoggedIn, setIsLoggedIn} = useContext(UserContext)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,15 +26,24 @@ const App: React.FC = () => {
   
     fetchData();
   }, []);
+
+
   
+  {/* <div className='flex flex-col items-center justify-between py-5 pt-40 gap-2 scroll-smooth'> */}
 
   return (
- 
-    <div className='flex flex-col items-center justify-between py-5 pt-40 gap-2 scroll-smooth'>
-      <TrendingArticle headlines={headlines}/>
-      <Sources/>
-      <NewsGrid/>
-    </div>
+    
+    <Router>
+      <Routes>
+        <Route path="/signin" element={isLoggedIn? <Navigate to='/'/> : <SignUpPage/>} />
+        <Route path='/' element={ isLoggedIn? <Layout/> : <Navigate to='signin'/>}>
+            <TrendingArticle headlines={headlines}/>
+            <Sources/>
+            <NewsGrid/>
+        </Route>
+      </Routes>
+    </Router>
+    
 
   )
 }
