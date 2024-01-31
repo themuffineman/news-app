@@ -10,7 +10,7 @@ const SignUpForm: React.FC = () => {
   const [inputEmail, setInputEmail] = useState<string>('');
   const [inputPassword, setInputPassword] = useState<string>('');
 
-  const userAuth = useContext(UserContext);
+  const userAuth = useContext<any>(UserContext);
 
   function switchForm(bool: boolean) {
     setSignUp(bool);

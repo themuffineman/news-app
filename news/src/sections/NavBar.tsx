@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Logo from '../components/Logo'
 import SearchBar from '../components/SearchBar'
 import Profile from '../components/Profile'
+import { UserContext } from '../utils/context'
 
 
 const NavBar: React.FC = () => {
+  const {userData} = useContext<any>(UserContext)
   return (
     <div className='flex justify-around sm:justify-between items-center h-max py-0 px-5 shadow w-[100%] right-0 fixed top-0 z-50 bg-slate-50'>
 
@@ -13,7 +15,7 @@ const NavBar: React.FC = () => {
             <SearchBar/>
         </div>
         <div>
-            <Profile Username={'Jason'} />
+            <Profile Username={userData.name} />
         </div>
         
     </div>
