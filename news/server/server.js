@@ -5,8 +5,10 @@ const cors = require('cors');
 const app = express();
 const PORT = 3000;
 
+
 const users = [];
 let nextUserId = 1;
+
 
 // Middleware to enable CORS
 app.use(cors());
@@ -26,7 +28,7 @@ app.post('/signup', (req, res) => {
   const userId = nextUserId++;
   users.push({ userId, name, email, password });
 
-  return res.status(201).json({ message: 'User created successfully', userId, name: users.name });
+  return res.status(201).json({ message: 'User created successfully', user: req.body });
 });
 
 app.post('/login', (req, res) => {
