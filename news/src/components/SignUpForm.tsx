@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import LoginBtn from './LoginBtn';
 import CreateBtn from './CreateBtn';
-// import axios from 'axios';
 import { UserContext } from '../utils/context';
 
 const SignUpForm: React.FC = () => {
@@ -46,7 +45,7 @@ const SignUpForm: React.FC = () => {
       userAuth.setUserData(userData.user);
       window.alert('Account Successfully Created');
       userAuth.setIsLoggedIn(true);
-    } catch (error) {
+    } catch (error: unknown) {
       console.log(error);
       window.alert(error.message);
     }
@@ -71,7 +70,7 @@ const SignUpForm: React.FC = () => {
       userAuth.setUserData(userData.user);
       window.alert('Successfully loggedIn');
       userAuth.setIsLoggedIn(true);
-    } catch (error) {
+    } catch (error: unknown) {
       console.log(error);
       window.alert(error.message);
     }
@@ -104,8 +103,8 @@ const SignUpForm: React.FC = () => {
       } else {
         await logInUser();
       }
-      // Add any other form-wide logic here
-    } catch (error) {
+      
+    } catch (error: unknown) {
       console.error(error);
       window.alert(error.message);
     }

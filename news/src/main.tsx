@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
 import { UserContext } from './utils/context.ts';
+import { User } from './utils/types.ts';
+
+
 
 const Main = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [userData, setUserData] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(false);
+  const [userData, setUserData] = useState<User[]>([]);
 
 
 
